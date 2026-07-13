@@ -1,0 +1,6 @@
+{
+  "name": "OceanPulse",
+  "description": "An advanced ocean intelligence, marine weather, surf forecasting, and tide tracking dashboard with AI consultation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
