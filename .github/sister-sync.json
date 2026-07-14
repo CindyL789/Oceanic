@@ -1,0 +1,42 @@
+{
+  "sister_repo": "NyxSpecter4/oceanpulse",
+  "sister_branch": "main",
+  "description": "oceanpulse is the sister repo. Both repos share capabilities. This config defines which files sync between them.",
+  "sync_rules": {
+    "auto_sync": [
+      {
+        "path": "database/oceanic-schema.sql",
+        "sister_path": "database/oceanpulse-schema.sql",
+        "mode": "adapt",
+        "note": "Schemas share the same patterns but may differ in domain-specific tables. Sync triggers a review PR, not auto-merge."
+      },
+      {
+        "path": "database/SCHEMA-README.md",
+        "sister_path": "database/SCHEMA-README.md",
+        "mode": "mirror",
+        "note": "Identical documentation. Auto-synced."
+      }
+    ],
+    "manual_adapt": [
+      {
+        "path": "src/lib/movebank.ts",
+        "sister_path": "lib/movebank-api.js",
+        "note": "Same logic, different language (TS vs JS). Sync creates an issue with a diff for manual adaptation."
+      },
+      {
+        "path": "src/lib/supabase.ts",
+        "sister_path": "lib/supabase-sync.js",
+        "note": "Same logic, different language. Sync creates an issue with a diff."
+      }
+    ],
+    "do_not_sync": [
+      "src/",
+      "server.ts",
+      "metadata.json",
+      "index.html",
+      "package.json",
+      "vite.config.ts",
+      "tsconfig.json"
+    ]
+  }
+}
