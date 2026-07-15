@@ -183,7 +183,7 @@ function generateMockForecast(location: string) {
     ripCurrentRisk = "High";
     safetyRating = "Caution";
     safetyReason = "Heavy groundswell breaking on shallow reef at Banzai Pipeline. Highly recommended for expert surfers only; strong rip currents present.";
-  } else if (normalized.includes("mavericks") || normalized.includes("california")) {
+  } else if (normalized.includes("mavericks")) {
     waterTemp = 53;
     airTemp = 59;
     waveHeight = 18.0;
@@ -198,6 +198,81 @@ function generateMockForecast(location: string) {
     ripCurrentRisk = "High";
     safetyRating = "Dangerous";
     safetyReason = "Extreme, high-energy heavy water groundswell breaking over reef ledge. Freezing water temps, heavy currents, and underwater rocks. Stay on the cliff to watch.";
+  } else if (normalized.includes("malibu")) {
+    waterTemp = 64;
+    airTemp = 74;
+    waveHeight = 3.2;
+    waveHeightMax = 5.0;
+    swellPeriod = 13;
+    swellDirDegrees = 190;
+    windSpeed = 7;
+    windGust = 11;
+    windDirDegrees = 310;
+    weatherDesc = "Perfect Southern California Sunshine";
+    weatherIcon = "Sun";
+    ripCurrentRisk = "Low";
+    safetyRating = "Safe";
+    safetyReason = "Gentle, clean peeling right-hand waves at Surfrider Beach. Ideal water temperature and light sea breezes. Excellent for all surfing abilities.";
+  } else if (normalized.includes("santa cruz") || normalized.includes("steamer")) {
+    waterTemp = 54;
+    airTemp = 62;
+    waveHeight = 6.5;
+    waveHeightMax = 9.5;
+    swellPeriod = 14;
+    swellDirDegrees = 290;
+    windSpeed = 9;
+    windGust = 14;
+    windDirDegrees = 45;
+    weatherDesc = "Chilly morning marine layer burning off to sun";
+    weatherIcon = "Cloud";
+    ripCurrentRisk = "Moderate";
+    safetyRating = "Caution";
+    safetyReason = "Solid, high-performance groundswell wraps around lighthouse point at Steamer Lane. Rocky entries and cold water require caution. Keep a sharp eye out for dense kelp beds.";
+  } else if (normalized.includes("huntington")) {
+    waterTemp = 63;
+    airTemp = 71;
+    waveHeight = 4.2;
+    waveHeightMax = 6.5;
+    swellPeriod = 12;
+    swellDirDegrees = 185;
+    windSpeed = 8;
+    windGust = 13;
+    windDirDegrees = 220;
+    weatherDesc = "Sunny skies with gentle afternoon sea breeze";
+    weatherIcon = "Sun";
+    ripCurrentRisk = "Moderate";
+    safetyRating = "Safe";
+    safetyReason = "Consistent South-Southwest swell filtering through the Huntington Beach Pier. Lifeguards actively patrolling. Great for shortboarding, swimming, and beach activities.";
+  } else if (normalized.includes("rincon")) {
+    waterTemp = 58;
+    airTemp = 68;
+    waveHeight = 5.0;
+    waveHeightMax = 7.5;
+    swellPeriod = 15;
+    swellDirDegrees = 265;
+    windSpeed = 6;
+    windGust = 10;
+    windDirDegrees = 30;
+    weatherDesc = "Clear blue skies with calm offshore breeze";
+    weatherIcon = "Sun";
+    ripCurrentRisk = "Low";
+    safetyRating = "Safe";
+    safetyReason = "Flawless, multi-section right-hand pointbreak lining up across the Rincon cove. Extremely clean faces with light offshore grooming winds. Safe for intermediate surfers.";
+  } else if (normalized.includes("california")) {
+    waterTemp = 58;
+    airTemp = 66;
+    waveHeight = 4.5;
+    waveHeightMax = 7.0;
+    swellPeriod = 12;
+    swellDirDegrees = 275;
+    windSpeed = 10;
+    windGust = 15;
+    windDirDegrees = 90;
+    weatherDesc = "Sunny with occasional coastal clouds";
+    weatherIcon = "Sun";
+    ripCurrentRisk = "Moderate";
+    safetyRating = "Safe";
+    safetyReason = "Standard Pacific groundswell with moderate currents. Good conditions for intermediate-to-advanced water activities.";
   } else if (normalized.includes("bondi") || normalized.includes("sydney") || normalized.includes("australia")) {
     waterTemp = 67;
     airTemp = 73;
@@ -486,6 +561,9 @@ Let's keep our bow pointed into the wind! 🌊⚓`;
   return reply;
 }
 
+// Cooldown timestamp for Gemini API requests (e.g. on 429 quota exhausted)
+let apiQuotaExceededUntil = 0;
+
 // API: Marine Forecast Generator
 app.post("/api/forecast", async (req, res) => {
   const { location } = req.body;
@@ -497,6 +575,12 @@ app.post("/api/forecast", async (req, res) => {
   const apiKey = process.env.GEMINI_API_KEY || "";
   if (!apiKey || apiKey === "MY_GEMINI_API_KEY" || apiKey.includes("MY_")) {
     console.log(`[OceanPulse Server] Gemini key is placeholder or missing. Triggering premium local forecasting simulator for: "${location}"`);
+    return res.json(generateMockForecast(location));
+  }
+
+  // If we are currently rate-limited or quota is exceeded, bypass immediately
+  if (Date.now() < apiQuotaExceededUntil) {
+    console.log(`[OceanPulse Server] Gemini cooldown active until ${new Date(apiQuotaExceededUntil).toLocaleTimeString()}. Serving local forecast for: "${location}"`);
     return res.json(generateMockForecast(location));
   }
 
@@ -528,8 +612,21 @@ Ensure all parameters are consistent (e.g., strong offshore winds groom waves ni
     return res.json(parsedJson);
 
   } catch (error: any) {
-    console.error("[OceanPulse Server] Gemini call failed. Falling back to local premium simulation engine:", error);
-    // Graceful error fallback
+    const errorStr = String(error?.message || error || "");
+    const errorStringified = JSON.stringify(error);
+    const isRateLimit = errorStr.includes("429") || errorStr.includes("RESOURCE_EXHAUSTED") || errorStr.includes("quota") ||
+                        errorStringified.includes("429") || errorStringified.includes("RESOURCE_EXHAUSTED") || errorStringified.includes("quota") ||
+                        error?.status === 429;
+    
+    if (isRateLimit) {
+      // Engage a 30-minute cooldown to let the Gemini free tier quotas replenish without spamming errors
+      apiQuotaExceededUntil = Date.now() + 30 * 60 * 1000;
+      console.log(`[OceanPulse Server] Gemini 429 Rate Limit / Quota Exceeded detected. Engaging 30-minute offline fallback (until ${new Date(apiQuotaExceededUntil).toLocaleTimeString()}).`);
+    } else {
+      console.log(`[OceanPulse Server] Gemini API call bypassed. Reason: ${errorStr.substring(0, 120)}`);
+    }
+
+    // Graceful error fallback using high-fidelity local engine
     return res.json(generateMockForecast(location));
   }
 });
@@ -547,6 +644,13 @@ app.post("/api/chat", async (req, res) => {
   if (!apiKey || apiKey === "MY_GEMINI_API_KEY" || apiKey.includes("MY_")) {
     console.log(`[OceanPulse Server] Gemini key is placeholder or missing. Triggering local conversational advisor for: "${location}"`);
     return res.json({ reply: generateFallbackChatResponse(location, forecast || generateMockForecast(location), message) });
+  }
+
+  // If we are currently rate-limited or quota is exceeded, bypass immediately
+  if (Date.now() < apiQuotaExceededUntil) {
+    console.log(`[OceanPulse Server] Gemini cooldown active. Serving local chat reply for: "${location}"`);
+    const activeForecast = forecast || generateMockForecast(location || "North Shore, Oahu");
+    return res.json({ reply: generateFallbackChatResponse(location || "North Shore, Oahu", activeForecast, message) });
   }
 
   try {
@@ -584,7 +688,20 @@ When replying:
     return res.json({ reply });
 
   } catch (error: any) {
-    console.error("[OceanPulse Server] Gemini Chat call failed. Falling back to local conversational advisor:", error);
+    const errorStr = String(error?.message || error || "");
+    const errorStringified = JSON.stringify(error);
+    const isRateLimit = errorStr.includes("429") || errorStr.includes("RESOURCE_EXHAUSTED") || errorStr.includes("quota") ||
+                        errorStringified.includes("429") || errorStringified.includes("RESOURCE_EXHAUSTED") || errorStringified.includes("quota") ||
+                        error?.status === 429;
+    
+    if (isRateLimit) {
+      // Engage a 30-minute cooldown to let the Gemini free tier quotas replenish without spamming errors
+      apiQuotaExceededUntil = Date.now() + 30 * 60 * 1000;
+      console.log(`[OceanPulse Server] Gemini 429 Rate Limit / Quota Exceeded detected in Chat. Engaging 30-minute offline fallback (until ${new Date(apiQuotaExceededUntil).toLocaleTimeString()}).`);
+    } else {
+      console.log(`[OceanPulse Server] Gemini Chat call bypassed. Reason: ${errorStr.substring(0, 120)}`);
+    }
+
     const activeForecast = forecast || generateMockForecast(location || "North Shore, Oahu");
     return res.json({ reply: generateFallbackChatResponse(location || "North Shore, Oahu", activeForecast, message) });
   }

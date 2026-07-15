@@ -1,0 +1,235 @@
+[
+  {
+    "id": "monterey_bay",
+    "name": "Monterey Bay National Marine Sanctuary",
+    "location": "California Coast, USA",
+    "coordinates": "36.8007° N, 121.7885° W",
+    "boundingBox": {
+      "minLat": 35.5,
+      "maxLat": 37.5,
+      "minLon": -123.0,
+      "maxLon": -121.5
+    },
+    "depthRange": "0m to 3250m",
+    "waterTempRange": "50°F - 58°F",
+    "description": "Known as the 'Serengeti of the Sea', featuring a massive underwater canyon that brings cold, nutrient-rich water to the surface, supporting kelp forests and giant mammals.",
+    "speciesPool": [
+      {
+        "id": "blue_whale",
+        "name": "Blue Whale",
+        "scientificName": "Balaenoptera musculus",
+        "category": "Whale",
+        "rarity": "Legendary",
+        "baseWeight": 150000,
+        "lengthRange": [75, 95],
+        "depthRange": [0, 500],
+        "traits": ["Giant of the Deep", "Echo Singer", "Krill Vacuum"],
+        "lore": "The largest animal known to have ever lived, reaching weights of up to 200 tons. Their heart is the size of a small car, and their low-frequency calls can travel hundreds of miles across oceans.",
+        "rarityWeight": 0.05
+      },
+      {
+        "id": "humpback_whale",
+        "name": "Humpback Whale",
+        "scientificName": "Megaptera novaeangliae",
+        "category": "Whale",
+        "rarity": "Epic",
+        "baseWeight": 30000,
+        "lengthRange": [45, 52],
+        "depthRange": [0, 200],
+        "traits": ["Acrobatic Breacher", "Complex Songsmith", "Bubble-Net Hunter"],
+        "lore": "Famous for their majestic breaches and complex, haunting songs. In Monterey Bay, they perform cooperatively to create spiral 'bubble nets' that trap and herd schools of small fish.",
+        "rarityWeight": 0.15
+      },
+      {
+        "id": "great_white_shark",
+        "name": "Great White Shark",
+        "scientificName": "Carcharodon carcharias",
+        "category": "Shark",
+        "rarity": "Epic",
+        "baseWeight": 2100,
+        "lengthRange": [13, 19],
+        "depthRange": [0, 250],
+        "traits": ["Apex Predator", "Electro-Sensor", "Thermal Conservator"],
+        "lore": "One of the ocean's most formidable predators. They aggregate around the Monterey Bay area in autumn (referred to as the 'Red Triangle') to feed on rich seal populations.",
+        "rarityWeight": 0.12
+      },
+      {
+        "id": "sea_otter",
+        "name": "Southern Sea Otter",
+        "scientificName": "Enhydra lutris nereis",
+        "category": "Mammal",
+        "rarity": "Common",
+        "baseWeight": 65,
+        "lengthRange": [3, 4],
+        "depthRange": [0, 20],
+        "traits": ["Tool User", "Kelp Guardian", "High-Metabolism Float"],
+        "lore": "An essential keystone species of Monterey Bay. By consuming sea urchins, they protect kelp forests from being completely deforested, preserving critical nursery habitat for countless species.",
+        "rarityWeight": 0.60
+      },
+      {
+        "id": "leopard_shark",
+        "name": "Leopard Shark",
+        "scientificName": "Triakis semifasciata",
+        "category": "Shark",
+        "rarity": "Common",
+        "baseWeight": 30,
+        "lengthRange": [4, 5],
+        "depthRange": [0, 10],
+        "traits": ["Saddle Patterns", "Benthic Feeder", "Shallow Dweller"],
+        "lore": "Stunning spotted sharks that frequent shallow sandy bays and eelgrass beds. They pose absolutely no danger to humans and are active nocturnal hunters.",
+        "rarityWeight": 0.50
+      }
+    ]
+  },
+  {
+    "id": "great_barrier_reef",
+    "name": "Great Barrier Reef Marine Park",
+    "location": "Coral Sea, Australia",
+    "coordinates": "18.2871° S, 147.6992° E",
+    "boundingBox": {
+      "minLat": -24.0,
+      "maxLat": -10.0,
+      "minLon": 142.0,
+      "maxLon": 154.0
+    },
+    "depthRange": "0m to 150m",
+    "waterTempRange": "72°F - 84°F",
+    "description": "The world's largest coral reef ecosystem, visible from space, composed of over 2,900 individual reefs and supporting an astonishing diversity of colorful marine life.",
+    "speciesPool": [
+      {
+        "id": "tiger_shark",
+        "name": "Tiger Shark",
+        "scientificName": "Galeocerdo cuvier",
+        "category": "Shark",
+        "rarity": "Epic",
+        "baseWeight": 1400,
+        "lengthRange": [11, 16],
+        "depthRange": [0, 350],
+        "traits": ["Striped Shadow", "Generalist Forager", "Apex Patrol"],
+        "lore": "Identified by dark tiger-like stripes. They are solitary, night-active hunters and crucial for maintaining the health of turtle populations and seagrass beds on the reef.",
+        "rarityWeight": 0.15
+      },
+      {
+        "id": "green_turtle",
+        "name": "Green Sea Turtle",
+        "scientificName": "Chelonia mydas",
+        "category": "Reptile",
+        "rarity": "Common",
+        "baseWeight": 350,
+        "lengthRange": [3, 4],
+        "depthRange": [0, 50],
+        "traits": ["Seagrass Grazer", "Oceanic Navigator", "Ancient Voyager"],
+        "lore": "Strictly herbivorous as adults, grazing on seagrasses which helps keep the beds productive. They migrate thousands of miles across open seas to nest on the same beaches where they hatched.",
+        "rarityWeight": 0.55
+      },
+      {
+        "id": "bottlenose_dolphin",
+        "name": "Indo-Pacific Bottlenose Dolphin",
+        "scientificName": "Tursiops aduncus",
+        "category": "Dolphin",
+        "rarity": "Common",
+        "baseWeight": 500,
+        "lengthRange": [8, 9],
+        "depthRange": [0, 100],
+        "traits": ["Pod Strategist", "High-Frequency Echo", "Playful Breacher"],
+        "lore": "Highly social and incredibly intelligent. They navigate the complex coral lagoons using vocal clicks and whistle whistles, cooperating in groups to herd school fish.",
+        "rarityWeight": 0.48
+      },
+      {
+        "id": "manta_ray",
+        "name": "Reef Manta Ray",
+        "scientificName": "Mobula alfredi",
+        "category": "Ray",
+        "rarity": "Rare",
+        "baseWeight": 1500,
+        "lengthRange": [10, 14],
+        "depthRange": [0, 120],
+        "traits": ["Cephalic Horns", "Filter Glide", "Cleaning Station Regular"],
+        "lore": "Boasting the largest brain-to-body ratio of any fish. They glide gracefully above coral outcrops to visit 'cleaning stations' where cleaner wrasses feed on their parasites.",
+        "rarityWeight": 0.25
+      },
+      {
+        "id": "whale_shark",
+        "name": "Whale Shark",
+        "scientificName": "Rhincodon typus",
+        "category": "Shark",
+        "rarity": "Legendary",
+        "baseWeight": 20000,
+        "lengthRange": [30, 40],
+        "depthRange": [0, 700],
+        "traits": ["Constellation Spots", "Plankton Filter", "Gentle Giant"],
+        "lore": "The largest fish in the world. Their skin is decorated with a unique checkerboard pattern of spots, which scientists use like fingerprints to identify individuals.",
+        "rarityWeight": 0.06
+      }
+    ]
+  },
+  {
+    "id": "galapagos",
+    "name": "Galápagos Marine Reserve",
+    "location": "Pacific Equatorial Current, Ecuador",
+    "coordinates": "0.1444° S, 90.5891° W",
+    "boundingBox": {
+      "minLat": -2.0,
+      "maxLat": 2.0,
+      "minLon": -93.0,
+      "maxLon": -89.0
+    },
+    "depthRange": "0m to 4000m",
+    "waterTempRange": "64°F - 78°F",
+    "description": "A unique confluence of major warm and cold ocean currents, fostering a melting pot of evolutionary biodiversity and species found nowhere else on earth.",
+    "speciesPool": [
+      {
+        "id": "scalloped_hammerhead",
+        "name": "Scalloped Hammerhead Shark",
+        "scientificName": "Sphyrna lewini",
+        "category": "Shark",
+        "rarity": "Epic",
+        "baseWeight": 350,
+        "lengthRange": [8, 11],
+        "depthRange": [0, 500],
+        "traits": ["Hammer Cephalofoil", "Schooling Aggregator", "Magnetic Navigator"],
+        "lore": "Known for aggregating in massive schools of hundreds around Darwin and Wolf islands. Their hammer-shaped head acts like a metal detector, loaded with sensors to find buried prey.",
+        "rarityWeight": 0.14
+      },
+      {
+        "id": "marine_iguana",
+        "name": "Galápagos Marine Iguana",
+        "scientificName": "Amblyrhynchus cristatus",
+        "category": "Reptile",
+        "rarity": "Rare",
+        "baseWeight": 25,
+        "lengthRange": [2, 4],
+        "depthRange": [0, 20],
+        "traits": ["Salt Sneezer", "Seaweed Grazer", "Volcanic Clinger"],
+        "lore": "The only lizard in the world that dives in the ocean to feed. They swim with a snake-like motion and dive down to graze on red and green algae growing on volcanic rocks.",
+        "rarityWeight": 0.28
+      },
+      {
+        "id": "orca",
+        "name": "Killer Whale (Orca)",
+        "scientificName": "Orcinus orca",
+        "category": "Whale",
+        "rarity": "Legendary",
+        "baseWeight": 8000,
+        "lengthRange": [20, 26],
+        "depthRange": [0, 400],
+        "traits": ["Apex Strategist", "Acoustic Dialect", "Apex of All Oceans"],
+        "lore": "The ocean's ultimate apex predator. Operating in tight matrilineal pods, they hunt sea lions and rays in the Galápagos waters using highly coordinated tactics.",
+        "rarityWeight": 0.04
+      },
+      {
+        "id": "galapagos_penguin",
+        "name": "Galápagos Penguin",
+        "scientificName": "Spheniscus mendiculus",
+        "category": "Bird",
+        "rarity": "Rare",
+        "baseWeight": 5,
+        "lengthRange": [1.5, 1.8],
+        "depthRange": [0, 30],
+        "traits": ["Equatorial Penguin", "Torpedo Swimmer", "Thermal Panting"],
+        "lore": "The only penguin species that lives north of the equator. They survive in the tropical zone thanks to the chilly, nutrient-rich Humboldt and Cromwell currents.",
+        "rarityWeight": 0.30
+      }
+    ]
+  }
+]
